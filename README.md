@@ -1,5 +1,25 @@
 # mort
-A dead code locator for Nim
+A dead code branch locator for Nim. This library will find places in your code that contain dead branches that are not executed at _runtime_. Nim already has dead code elimination at _compile time_ but this won't, for example, eliminate a dead branch on your if else statement, because that can only be determined at _run time_.
+
+Say you have a Nim module like so:
+
+```nim
+proc notUsedProc() =
+  echo "being optimized"
+  
+proc main() =
+  let input = stdin.readLine()
+  if input == "hello":
+    echo "Hi!"
+  else:
+    echo "You're supposed to greet me"
+
+main()
+```
+
+You can see by the above code that the `notUsedProc()` can be optimized away at compile time, but the if/else statement depends on user input and cannot be optimized away.
+
+But maybe you have a bug in the `if input == "hello"` branch but that never gets called very often or at all. This library can tell you (based on runtime usage) whether or not your branches get called and let you know.
 
 ## Usage
 
