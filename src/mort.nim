@@ -52,6 +52,9 @@ proc logUsage(filename: string, line: int) =
 
 ######################## User API ################################
 
+proc getUsageTable*(): TableRef[string, TableRef[int, int]] =
+  return UsageTable
+
 proc printCodeUsage*() =
   ## Prints usage for all code paths
   for filename, lineTable in UsageTable.pairs:
