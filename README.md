@@ -19,11 +19,11 @@ main()
 
 You can see by the above code that the `notUsedProc()` can be optimized away at compile time, but the if/else statement depends on user input and cannot be optimized away.
 
-But maybe you have a bug in the `if input == "hello"` branch but that never gets called very often or at all. This library can tell you (based on runtime usage) whether or not your branches get called and let you know.
+But maybe you have a bug in the `if input == "hello"` branch but that never gets called very often or at all. This library can tell you (based on runtime usage) whether or not your branches get called and let you know. This could be useful for **test coverage** for example.
 
 ## Usage
 
-Simply use the `findDeadCode` macro on your code, shown below, then call either or both of `printCodeUsage` or `printDeadCode`.
+Simply use the `findDeadCode` macro on your code, shown below, then call either or both of `printCodeUsage` or `printDeadCode`. Or you can get the usage table itself to do with what you like via `getUsageTable`, which returns a `TableRef[string, TableRef[int, int]]` where the string is the filename and the inner table has key = lineNumber and value = timesCalled.
 
 ```nim
 import mort
@@ -46,6 +46,10 @@ proc main() =
   # then call ``printCodeUsage`` and/or ``printDeadCode``
   printCodeUsage()
   printDeadCode()
+  
+  # or get the information yourself:
+  let usageTable: TableRef[string, TableRef[int, int]] = getUsageTable()
+  # Do cool stuff, like get test coverage
 
 main()
 ```
